@@ -1,0 +1,6 @@
+-- FDT contains many spiltters inside an FDT
+-- The size of an FDT is the number of splitters  
+-- Splitter parent's is an FDT
+-- Splitter sizes: 1:2, 1:4, 1:8, 1:16, 1:32
+-- Fibre parent's is cable 
+-- Fibre sizes: 288, 144, 96 (main feeder), 36, 24 (direct feeder)
