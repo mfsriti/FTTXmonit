@@ -5,29 +5,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sa.edu.ksu.psatri.fttxmonit.beans.CFailureBean;
+import sa.edu.ksu.psatri.fttxmonit.beans.RFailureBean;
 
-public class CFailureDAO extends CommonDAO {
-	public static List<CFailureBean> listFailures(){
-		List<CFailureBean> tmpList = null;
-		String sqlString = "select * from CurrentFailures";
+public class RFailureDAO extends CommonDAO {
+	public static List<RFailureBean> listFailures(){
+		List<RFailureBean> tmpList = null;
+		String sqlString = "select * from ResolvedFailures";
 		try {
 			executeQuery(sqlString);
 			boolean more = result.next(); 
 			if (!more) { 
-				System.out.println("Sorry, no failure found");
+				System.out.println("Sorry, no resolved failure found");
 			} else { 			
-				tmpList = new ArrayList<CFailureBean>();
+				tmpList = new ArrayList<RFailureBean>();
 				do {
-					CFailureBean bean = new CFailureBean();
+					RFailureBean bean = new RFailureBean();
 					bean.setComponentID(result.getString("ComponentID"));
 					bean.setFailureID(result.getInt("FailureID"));
 					bean.setFailureType(result.getString("FailureType"));
 					bean.setFailureDate(result.getDate("FailureDate"));
+					bean.setResolverID(result.getInt("ResolverID"));
+					bean.setAutoRepairDate(result.getDate("AutoRepairDate"));
+					bean.setTechRepairDate(result.getDate("TechRepairDate"));
 					tmpList.add(bean);
 				} while (result.next());		
 			}			
 		} catch (Exception e) {
-			System.out.println("List Failures failed: An Exception has occurred! " + e);
+			System.out.println("List Resolved Failures failed: An Exception has occurred! " + e);
 		} finally { 
 			if (result != null) { 
 				try { 

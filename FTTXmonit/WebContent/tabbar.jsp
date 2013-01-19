@@ -42,13 +42,13 @@ if (itemId.equals("one")){
 	tabs = new String[][]{{"Home","home.jsp","Home"}, {"Home","#","News"} };
 	actionType = "Home";
 } else if (itemId.equals("two")){ 
-	tabs = new String[][]{{"View Key Map","showKM","Key Map"}, {"View/Update SLD","showSLD","SLD Scheme"} };
+	tabs = new String[][]{{"View Key Map","showKM","Key Map"}, {"View/Update SLD","showSLD","SLD Schema"} };
 	actionType = "KeyMap";
 } else if (itemId.equals("three")){ 
-	tabs = new String[][]{{"See Current Failures","showFails","Current Failures"}, {"See Resolved Failures","#","Resolved Failure"} };
+	tabs = new String[][]{{"See Current Failures","displayFails","Display Failures"}, {"See Current Failures","listFails?type=Current","Current Failures"}, {"See Resolved Failures","listFails?type=Resolved","Resolve Failures"} };
 	actionType = "Failures";
 } else if (itemId.equals("four")){
-	tabs = new String[][]{{"See Tabular Reports","chartReport","Chart Reports"}, {"See Textual Reports","pieReport","Pie Reports"} };
+	tabs = new String[][]{{"See Tabular Reports","chartReport","Chart Report"}, {"See Textual Reports","pieReport","Pie Report"} };
 	actionType = "Reports";
 } else if (itemId.equals("five")){ 
 	tabs = new String[][]{{"Create User","listUsers","Users"}, {"Create User","groups.jsp","Groups"}, {"Create User","actions.jsp","Actions"}};

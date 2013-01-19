@@ -111,14 +111,16 @@ function displayEditMarker(position) {
 				draggable : true,
 	
 			});
-	        document.getElementById("latlng").value = position.lat().toFixed(6)+"*1000000, "+position.lng().toFixed(6)+"*1000000";
+	        if (document.getElementById("latlng")) {
+	        	document.getElementById("latlng").value = position.lat().toFixed(6)+"*1000000, "+position.lng().toFixed(6)+"*1000000";
 	        
-	        google.maps.event.addListener(marker, "dragend", function() {
-	        	var p = marker.getPosition();
-	        	document.getElementById("latlng").value = p.lat().toFixed(6)+"*1000000, "+p.lng().toFixed(6)+"*1000000";
-	        	document.getElementById("latlng").focus();
-	        	document.getElementById("latlng").select();
-	        });
+	        	google.maps.event.addListener(marker, "dragend", function() {
+	        		var p = marker.getPosition();
+	        		document.getElementById("latlng").value = p.lat().toFixed(6)+"*1000000, "+p.lng().toFixed(6)+"*1000000";
+	        		document.getElementById("latlng").focus();
+	        		document.getElementById("latlng").select();
+	        	});
+	        }
 }
 
 function drawKeyMap(fdts, holes, cables , splices, odbs, onts, failMode) { // new version with json object

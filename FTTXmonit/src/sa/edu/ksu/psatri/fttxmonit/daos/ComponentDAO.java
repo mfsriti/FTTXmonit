@@ -84,6 +84,50 @@ public class ComponentDAO extends CommonDAO {
 		return tmpMap; 
 	}
 	
+	public static List<ComponentBean> listComponentsByTypeID(String typeId){
+		List<ComponentBean> tmpList = null;
+		String sqlString = "select * from components, componenttypes where components.componentTypeId=componenttypes.componentTypeId and components.componentTypeId="+typeId;
+		System.out.println(sqlString);
+		try {
+			executeQuery(sqlString);
+			boolean more = result.next(); 
+			if (!more) { 
+				System.out.println("Sorry, no object of type components in the database.");
+			} else { 				
+				tmpList = new ArrayList<ComponentBean>();
+				
+				do {
+					ComponentBean bean = getBean();
+					tmpList.add(bean);
+				} while (result.next());				
+			}			
+		} catch (Exception e) {
+			System.out.println("List Component failed: An Exception has occurred! " + e);
+		} finally { 
+			if (result != null) { 
+				try { 
+					result.close(); 
+				} catch (Exception e) {
+				}
+			    result = null; 
+			} 
+			if (stmt != null) { 
+				try { 
+					stmt.close(); 
+				} catch (Exception e) {
+			    } 
+				stmt = null;
+			} 
+			if (currentCon != null) { 
+				try { currentCon.close(); 
+				} catch (Exception e) {
+				} 
+				currentCon = null; 
+			} 
+		} 
+		return tmpList; 
+	}
+	
 	public static ComponentBean findComponent(String compId){
 		ComponentBean bean = null;
 		String sqlString = "select * from components, componenttypes where components.componentTypeId=componenttypes.componentTypeId and components.componentId='"+compId+"'";

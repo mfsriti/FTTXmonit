@@ -22,7 +22,7 @@
 <title>FTTX Monitoring | User Logged Successfully as <%=group%>
 </title>
 <link rel="stylesheet" href="css/chart.css" type="text/css"
-	media="screen">
+	media="screen"/>
 	
 <link rel="stylesheet" type="text/css" href="css/960.css" />
 <link rel="stylesheet" type="text/css" href="css/reset.css" />

@@ -7,19 +7,29 @@
 <div class="grid_9">
 	<h1 class="map">Key Map</h1>
 </div>
+
+<div class="grid_15" id="textcontent">
+	<div id="container">
+		<iframe style="width: 900px; height: 600px; overflow: hidden;"
+			src="keymap2.jsp"></iframe>
+			
+	</div>
+</div>
+
 <!-- CONTENT TITLE RIGHT BOX -->
-<div class="grid_6" id="eventbox">
+<!--  <div class="grid_6" id="eventbox">
 	<a href="#" class="inline_tip">Click on "Display Key Map" to see the map.</a>
 </div>
 <div class="clear"></div>
 <div class="grid_15" id="textcontent">
 <%
-Map<String,List<ComponentBean>> map = (Map<String,List<ComponentBean>>) session.getAttribute("mapComponents");
-Gson gson = new Gson();
+session.setAttribute("failMode", "false");
+//Map<String,List<ComponentBean>> map = (Map<String,List<ComponentBean>>) session.getAttribute("mapComponents");
+//Gson gson = new Gson();
 %>
 	<div id="container">
 		<a href="javascript:void(0);" onclick="initMap('map_canvas', '550px');drawKeyMap(<%
-			out.print(gson.toJson(map.get("FDT")).replace("\"", "&quot;"));	
+	/*		out.print(gson.toJson(map.get("FDT")).replace("\"", "&quot;"));	
 		out.print(",");	
 		out.print(gson.toJson(map.get("Hole")).replace("\"", "&quot;"));
 		out.print(",");	
@@ -29,7 +39,7 @@ Gson gson = new Gson();
 		out.print(",");	
 		out.print(gson.toJson(map.get("ODB")).replace("\"", "&quot;"));
 		out.print(",");	
-		out.print(gson.toJson(map.get("ONT")).replace("\"", "&quot;"));
+		out.print(gson.toJson(map.get("ONT")).replace("\"", "&quot;")); */
 		%>);" class="button">
 			<span>Display Key Map</span>
 		</a>
@@ -38,4 +48,4 @@ Gson gson = new Gson();
 	<input id="latlng" type="text" class="smallInput"/><br />
 	<div id="map_canvas">
 	</div>	
-</div>
+</div> -->

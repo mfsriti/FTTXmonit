@@ -6,7 +6,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<meta charset="utf-8">
 
 <link rel="stylesheet" href="css/chart.css" type="text/css"
 	media="screen">
@@ -51,4 +50,3 @@ while(it.hasNext()){
 	<div id="holder"></div>
 </body>
 </html>
-<html>

@@ -3,11 +3,18 @@ package sa.edu.ksu.psatri.fttxmonit.beans;
 import java.util.Date;
 
 public class CFailureBean {
+	boolean valid;
 	int failureID;
 	Date failureDate;
 	String failureType;
 	String componentID;
 	ComponentBean component = null;
+	public boolean isValid() {
+		return valid;
+	}
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
 	public int getFailureID() {
 		return failureID;
 	}

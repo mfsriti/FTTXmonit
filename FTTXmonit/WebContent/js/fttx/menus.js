@@ -10,13 +10,24 @@ function changeElement(elemId, page, params) {
 				document.getElementById(elemId).innerHTML = xmlhttp.responseText;
 			}
 		};
-		xmlhttp.open("GET", page+"?"+params, true);
+		if (params)
+			page = page+"?"+params;
+		xmlhttp.open("GET", page, true);
 		xmlhttp.send();
 	}
 	
 	function onClickMenu(itemId) {
 		changeElement("menu", "menubar.jsp", "itemId="+itemId);
-		changeElement("tabs", "tabbar.jsp", "itemId="+itemId+"&tabId=tab0");	
+		
+		var page = "#";
+		if (itemId === "one") page ="home.jsp";
+		if (itemId === "two") page = "showKM";
+		if (itemId === "three") page = "displayFails";
+		if (itemId === "four") page = "chartReport";
+		if (itemId === "five") page = "listUsers";
+		//changeElement("tabs", "tabbar.jsp", "itemId="+itemId+"&tabId=tab0");
+		//changeElement("content", page, "");
+		onClickTab(itemId, "tab0", page);
    	}
 	
 	function onClickTab(itemId, tabId, pageName) {

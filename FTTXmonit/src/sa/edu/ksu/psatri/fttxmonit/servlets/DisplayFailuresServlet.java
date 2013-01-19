@@ -21,14 +21,14 @@ import sa.edu.ksu.psatri.fttxmonit.daos.ComponentDAO;
 import sa.edu.ksu.psatri.fttxmonit.daos.GPSPointDAO;
 
 
-@WebServlet("/showFails")
-public class ShowCurrentFailuresServlet extends HttpServlet {
+@WebServlet("/displayFails")
+public class DisplayFailuresServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShowCurrentFailuresServlet() {
+    public DisplayFailuresServlet() {
         super();
     }
 
@@ -53,11 +53,15 @@ public class ShowCurrentFailuresServlet extends HttpServlet {
 			Iterator<CFailureBean> itr1 = failures.iterator();
 			while(itr1.hasNext()) {
 				CFailureBean failure = (CFailureBean)itr1.next();
-				ComponentBean relatedComponent = ComponentDAO.findComponent(failure.getComponentID());
-				failure.setComponent(relatedComponent);
-				ComponentBean relatedParent = ComponentDAO.findComponent(relatedComponent.getParentID());
-				relatedComponent.setParent(relatedParent);	
-				map.putAll( ComponentDAO.listPredecessors(relatedParent.getComponentID()) );
+				ComponentBean comp = ComponentDAO.findComponent(failure.getComponentID());
+				failure.setComponent(comp);
+				
+				if (comp.getParentID()!=null) {
+					ComponentBean parent = ComponentDAO.findComponent(comp.getParentID());
+					comp.setParent(parent);
+					comp = parent;
+				}
+				map.putAll( ComponentDAO.listPredecessors(comp.getComponentID()) );
 			}
 			
 			// 3. for each component get the parent, if it's of type FDT stop

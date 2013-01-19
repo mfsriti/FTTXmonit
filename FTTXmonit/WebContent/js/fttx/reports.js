@@ -10,7 +10,8 @@ function drawPie (elemId, width, height, stats) {
 	}
 	
 	var r = new Raphael(report_canvas, width, height);
-    var reportPie = r.piechart(450, 225, 200, values, { legend: legends, legendpos: "east"}
+	//var reportPie = r.piechart(450, 225, 200, values, { legend: legends, legendpos: "east"}
+	var reportPie = r.piechart(425, 275, 200, values, { legend: legends, legendpos: "east"}
     );
 
     reportPie.hover(function () {
