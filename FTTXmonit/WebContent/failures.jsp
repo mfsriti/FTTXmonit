@@ -48,7 +48,7 @@ if (currentFailures==null) {
 					<tbody>
 					<%
 					
-					if (type.equals("Current")) {
+					if (type.equals("Current") && currentFailures != null) {
 						Iterator<CFailureBean> itr = currentFailures.iterator(); 
 						while(itr.hasNext()) {
 							CFailureBean element = (CFailureBean)itr.next(); 	
@@ -63,11 +63,11 @@ if (currentFailures==null) {
 							//String onclickStr = " onclick=\"onClickTab('three', 'tab"+tabId+"', 'listFails?type="+type+"&failureId="+element.getFailureID()+"') ";
 							//out.print("<a class=\"button_ok\""+onclickStr+"><span>Repair \""+element.getFailureID()+"\"</span></a></td>");
 						    %>
-						    <a class="button_ok" onclick="onClickTab('three', 'tab<%=tabId %>', 'listFails?type=<%=type%>&failureId=<%=element.getFailureID()%>')"><span>Repair "<%=element.getFailureID()%>"</span></a>
+						    <a class="button_ok" onclick="onClickTab('three', 'tab<%=tabId %>', 'repairFail?id=<%=element.getFailureID()%>')"><span>Repair "<%=element.getFailureID()%>"</span></a>
 						    <%
 							out.print("</td></tr>");
 						}	
-					} else {
+					} else if (type.equals("Resolved") && resolvedfailures != null) {
 						Iterator<RFailureBean> itr = resolvedfailures.iterator(); 
 						while(itr.hasNext()) {
 							RFailureBean element = (RFailureBean)itr.next(); 	
@@ -78,8 +78,8 @@ if (currentFailures==null) {
 							out.print("<td>"+element.getFailureType()+"</td>");		
 							out.print("<td>"+element.getComponentID()+"</td>");						
 							out.print("<td>"+element.getResolverID()+"</td>");						
-							out.print("<td>"+element.getAutoRepairDate().toLocaleString().substring(0,element.getFailureDate().toLocaleString().length()-9)+"</td>");						
-							out.print("<td>"+element.getTechRepairDate().toLocaleString().substring(0,element.getFailureDate().toLocaleString().length()-9)+"</td>");						
+							out.print("<td>"+(element.getAutoRepairDate()==null? "-": element.getAutoRepairDate().toLocaleString().substring(0,element.getFailureDate().toLocaleString().length()-9))+"</td>");						
+							out.print("<td>"+(element.getTechRepairDate()==null? "-":element.getTechRepairDate().toLocaleString().substring(0,element.getFailureDate().toLocaleString().length()-9))+"</td>");						
 							out.print("</tr>");
 						}	
 					}

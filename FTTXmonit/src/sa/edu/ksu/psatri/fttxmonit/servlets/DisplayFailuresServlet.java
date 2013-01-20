@@ -50,18 +50,28 @@ public class DisplayFailuresServlet extends HttpServlet {
 			
 			// 2. for each failure get the related component and its parent
 			Map<String,List<ComponentBean>> map = new HashMap<String, List<ComponentBean>>();
-			Iterator<CFailureBean> itr1 = failures.iterator();
-			while(itr1.hasNext()) {
-				CFailureBean failure = (CFailureBean)itr1.next();
-				ComponentBean comp = ComponentDAO.findComponent(failure.getComponentID());
-				failure.setComponent(comp);
-				
-				if (comp.getParentID()!=null) {
-					ComponentBean parent = ComponentDAO.findComponent(comp.getParentID());
-					comp.setParent(parent);
-					comp = parent;
+			if (failures != null) {
+				Iterator<CFailureBean> itr1 = failures.iterator();
+				while(itr1.hasNext()) {
+					CFailureBean failure = (CFailureBean)itr1.next();
+					ComponentBean comp = ComponentDAO.findComponent(failure.getComponentID());
+					failure.setComponent(comp);
+					
+					if (comp.getParentID()!=null) {
+						ComponentBean parent = ComponentDAO.findComponent(comp.getParentID());
+						comp.setParent(parent);
+						comp = parent;
+					}
+					//map.putAll( ComponentDAO.listPredecessors(comp.getComponentID()) );
+					Map<String,List<ComponentBean>> map2 = ComponentDAO.listPredecessors(comp.getComponentID());
+					for(String key : map2.keySet()) {
+					    if(map.containsKey(key)) {
+					        map.get(key).addAll(map2.get(key));
+					    } else {
+					        map.put(key,map2.get(key));
+					    }
+					}
 				}
-				map.putAll( ComponentDAO.listPredecessors(comp.getComponentID()) );
 			}
 			
 			// 3. for each component get the parent, if it's of type FDT stop

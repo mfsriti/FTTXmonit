@@ -16,7 +16,7 @@ public class CommonDAO {
 	
 	protected static void executeInsertAutoGenKeys(String sqlString) throws SQLException {
 		init(); 
-		stmt.executeUpdate(sqlString,Statement.RETURN_GENERATED_KEYS); 
+	    stmt.executeUpdate(sqlString,Statement.RETURN_GENERATED_KEYS); 
 		result = stmt.getGeneratedKeys();
 	} 
 	

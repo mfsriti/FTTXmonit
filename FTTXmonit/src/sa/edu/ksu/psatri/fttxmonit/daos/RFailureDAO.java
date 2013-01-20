@@ -57,22 +57,28 @@ public class RFailureDAO extends CommonDAO {
 		return tmpList; 
 	}
 	
-	public static CFailureBean addFailure(CFailureBean bean){
-		String sqlString = "INSERT INTO CurrentFailures (FailureDate,FailureType,ComponentID) VALUES ('"+new Date(bean.getFailureDate().getTime()).toString()+"', '"+bean.getFailureType()+"', '"+bean.getComponentID()+"');";
+	public static RFailureBean addFailure(RFailureBean bean){
+		String sqlString = "INSERT INTO ResolvedFailures (FailureDate,FailureType,ComponentID,ResolverId,TechRepairDate,AutoRepairDate) VALUES ('" + 
+								new Date(bean.getFailureDate().getTime()).toString() + "', '" + 
+								bean.getFailureType() + "', '" + 
+								bean.getComponentID() + "', '" +
+								bean.getResolverID()  + "', " +
+								((bean.getTechRepairDate()==null)? "NULL" : "'"+new Date(bean.getTechRepairDate().getTime()).toString()+"'") + "," +
+								((bean.getAutoRepairDate()==null)? "NULL" : "'"+new Date(bean.getAutoRepairDate().getTime()).toString()+"'") + ");";
 		try {
 		        executeInsertAutoGenKeys(sqlString);
 		        boolean more = result.next();
 		        if (!more) { 
-		        	System.out.println("Sorry, adding new failure fails!");
+		        	System.out.println("Sorry, adding resolved failure fails!");
 					bean.setValid(false);
 				} else { 
 					int failureId = result.getInt(1); 
-					System.out.println("New failure added with ID:" + failureId );
+					System.out.println("Resolved failure added with ID:" + failureId );
 					bean.setFailureID(failureId);
 					bean.setValid(true); 
 				}			
 		} catch (Exception e) {
-			System.out.println("List Failures failed: An Exception has occurred! " + e);
+			System.out.println("Add Resolved Failure failed: An Exception has occurred! " + e);
 		} finally { 
 			if (result != null) { 
 				try { 

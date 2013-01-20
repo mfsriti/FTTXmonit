@@ -3,7 +3,9 @@
 	pageEncoding="ISO-8859-1" import="com.google.gson.Gson, java.util.Map, java.util.List, java.util.Iterator, sa.edu.ksu.psatri.fttxmonit.util.ArrayUtils,sa.edu.ksu.psatri.fttxmonit.beans.ComponentBean "%>
 
 
-
+<%
+session.setAttribute("failMode", "true");
+%>
 <div class="grid_9">
 	<h1 class="map">Failures</h1>
 </div>
@@ -21,7 +23,6 @@
 <div class="clear"></div>
 <div class="grid_15" id="textcontent"> 
 <%
-session.setAttribute("failMode", "true");
 //Map<String,List<ComponentBean>> map = (Map<String,List<ComponentBean>>) session.getAttribute("mapComponents");
 //Gson gson = new Gson();
 %>
