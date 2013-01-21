@@ -1,3 +1,17 @@
+var timer=null;
+var seconds = 10; 
+
+function startFailuresRefresh() {
+    timer = setInterval(function() {
+    	onClickTab('three', 'tab0', 'displayFails');
+    }, seconds*1000);
+}
+
+function cancelFailuresRefresh() {
+    clearInterval(timer);
+    timer = null;
+}
+
 function changeElement(elemId, page, params) {
 		var xmlhttp;
 		if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -25,12 +39,18 @@ function changeElement(elemId, page, params) {
 		if (itemId === "three") page = "displayFails";
 		if (itemId === "four") page = "chartReport";
 		if (itemId === "five") page = "listUsers";
-		//changeElement("tabs", "tabbar.jsp", "itemId="+itemId+"&tabId=tab0");
-		//changeElement("content", page, "");
+		
 		onClickTab(itemId, "tab0", page);
    	}
 	
 	function onClickTab(itemId, tabId, pageName) {
+		if (pageName=="displayFails"){
+			if (timer==null){
+				startFailuresRefresh();
+			}
+		} else {
+			cancelFailuresRefresh();
+		}
 		changeElement("tabs", "tabbar.jsp", "itemId="+itemId+"&tabId="+tabId);	
 	   	changeElement("content", pageName, "");
    	}

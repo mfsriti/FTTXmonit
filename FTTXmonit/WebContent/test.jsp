@@ -10,7 +10,7 @@
 <link href="css/text.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/login.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js/fttx/menus.js"></script>
+<script type="text/javascript" src="js/fttx/actions.js"></script>
 
 <script type="text/javascript">
 $(function(){

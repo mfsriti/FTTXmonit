@@ -3,6 +3,25 @@
 	pageEncoding="ISO-8859-1" import="com.google.gson.Gson, java.util.Map, java.util.List, java.util.Iterator, sa.edu.ksu.psatri.fttxmonit.util.ArrayUtils,sa.edu.ksu.psatri.fttxmonit.beans.ComponentBean "%>
 
 
+<script type="text/javascript">
+	var timer;
+	var seconds = 3; 
+
+	function startActivityRefresh() {
+	    timer = setInterval(function() {
+	    	onClickTab('three', 'tab0', 'DisplayFails');
+	    }, seconds*1000);
+	}
+
+	function cancelActivityRefresh() {
+	    clearInterval(timer);
+	}
+	$(function() {
+	    startActivityRefresh();
+	});
+</script>
+
+	
 <%
 session.setAttribute("failMode", "true");
 %>

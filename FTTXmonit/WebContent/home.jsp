@@ -55,7 +55,7 @@
 <script type="text/javascript" src="js/raphael/g.pie-min.js"></script>
 <script type="text/javascript" src="js/raphael/popup.js"></script>
 <script type="text/javascript" src="js/raphael/analytics.js"></script>
-<script type="text/javascript" src="js/fttx/menus.js"></script>
+<script type="text/javascript" src="js/fttx/actions.js"></script>
 <script type="text/javascript" src="js/fttx/infobox.js"></script> 
 <script type="text/javascript" src="js/fttx/map.js"></script> 
 <script type="text/javascript" src="js/fttx/sld.js"></script> 

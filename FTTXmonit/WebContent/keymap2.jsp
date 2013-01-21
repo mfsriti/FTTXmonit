@@ -10,28 +10,6 @@
 <script type="text/javascript" src="js/fttx/map.js"></script> 
 <%
 String failMode =(String)session.getAttribute("failMode");
-if (failMode=="true"){
-	%>
-<script type="text/javascript">
-	var timer;
-	var seconds = 10; 
-
-	function startActivityRefresh() {
-	    timer = setInterval(function() {
-	        $('#map_canvas').load('displayFails');
-	    }, seconds*1000)
-	}
-
-	function cancelActivityRefresh() {
-	    clearInterval(timer);
-	}
-	$(function() {
-	    startActivityRefresh();
-	});
-</script>
-	<%
-}
-	
 %>
 </head>
 <%
