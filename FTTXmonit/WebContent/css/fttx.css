@@ -1,0 +1,16 @@
+@CHARSET "ISO-8859-1";
+
+table.sldfdtinfo { 
+	border-collapse: collapse; 
+	background-color: #E3E4FA;
+}
+
+table.sldfdtinfo td, table.sldfdtinfo th { 
+	border: 1px solid black;
+	padding: 1px; 
+}
+
+table.sldfdtinfo td{
+	font-family: Arial; 
+	font-size: 8pt;
+}

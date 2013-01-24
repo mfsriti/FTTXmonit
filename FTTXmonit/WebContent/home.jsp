@@ -355,7 +355,7 @@
 	<!-- WRAPPER END -->
 	<!-- FOOTER START -->
 	<div class="container_16" id="footer">
-		Website Administration by <a href="http://ksu.edu.sa/Research/ATRC/">PSATRI</a>
+		Administrated by <a href="http://ksu.edu.sa/Research/ATRC/">PSATRI</a>
 	</div>
 	<!-- FOOTER END -->
 </body>

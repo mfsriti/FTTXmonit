@@ -5,3 +5,6 @@ source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\03_populateLevel02.
 source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\04_populateLevel03.sql
 source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\05_populateFibres.sql
 source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\06_populateSplitters.sql
+source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\07_populateFailures.sql
+source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\08_populateStats.sql
+source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\09_procedures.sql

@@ -9,10 +9,21 @@ import java.util.Map;
 import sa.edu.ksu.psatri.fttxmonit.beans.ComponentBean;
 
 public class ComponentDAO extends CommonDAO {
+	
+	public static List<ComponentBean> listComponentsByType(String type){
+		List<ComponentBean> result = null;
+		String types = "('"+type+"')";
+		Map<String, List<ComponentBean>> map = listComponents(types);
+		if (map != null)
+			result = map.get(type);
+		return result;
+	}
+	
 	public static Map<String, List<ComponentBean>> listVisibleComponents(){
 		String types = "('FDT', 'Hole', 'Cable', 'ODB', 'ONT', 'Splice')";
 		return listComponents(types);
 	}
+	
 	private static ComponentBean getBean() throws SQLException {
 		ComponentBean bean = new ComponentBean();
 		bean.setComponentID(result.getString("ComponentID"));
@@ -214,6 +225,45 @@ public class ComponentDAO extends CommonDAO {
 		return tmpMap; 
 	}
 
+	public static ComponentBean findFDTIdInPredecessors(ComponentBean cbean){
+		ComponentBean rbean = null;
+		String sqlString = "call findFDTIdInPredecessors('"+cbean.getComponentID()+"')";
+		try {
+			executeQuery(sqlString);
+			boolean more = result.next(); 
+			if (!more) { 
+				System.out.println("findFDTIdInPredecessors: Sorry, no object of type components in the database.");
+			} else { 				
+				rbean = getBean();
+			}					
+		} catch (Exception e) {
+			System.out.println("findFDTIdInPredecessors failed: An Exception has occurred! " + e);
+		} finally { 
+			if (result != null) { 
+				try { 
+					result.close(); 
+				} catch (Exception e) {
+				}
+			    result = null; 
+			} 
+			if (stmt != null) { 
+				try { 
+					stmt.close(); 
+				} catch (Exception e) {
+			    } 
+				stmt = null;
+			} 
+			if (currentCon != null) { 
+				try { currentCon.close(); 
+				} catch (Exception e) {
+				} 
+				currentCon = null; 
+			} 
+		} 
+		return rbean; 
+	}
+
+	
 	public static String findPredecessor(String compId){
 		String predId = null;
 		String sqlString = "select * from Predecessors where ComponentID='"+compId+"'";
@@ -250,5 +300,50 @@ public class ComponentDAO extends CommonDAO {
 			} 
 		} 
 		return predId; 
+	}
+	
+	public static List<ComponentBean> listChildComponents(ComponentBean parent, String includedTypes){
+		List<ComponentBean> tmpList = null;
+		String typeFilter = (includedTypes == null) ? "" : " and componentTypeName IN "+ includedTypes;
+		String sqlString = "select * from components, componenttypes where components.componentTypeId=componenttypes.componentTypeId and components.parentId='"+parent.getComponentID()+"'"+ typeFilter;
+		System.out.println(sqlString);
+		try {
+			executeQuery(sqlString);
+			boolean more = result.next(); 
+			if (!more) { 
+				System.out.println("Sorry, no children found for the component: " + parent.getComponentID());
+			} else { 				
+				tmpList = new ArrayList<ComponentBean>();
+				
+				do {
+					ComponentBean bean = getBean();
+					tmpList.add(bean);
+				} while (result.next());				
+			}			
+		} catch (Exception e) {
+			System.out.println("listChildComponents failed: An Exception has occurred! " + e);
+		} finally { 
+			if (result != null) { 
+				try { 
+					result.close(); 
+				} catch (Exception e) {
+				}
+			    result = null; 
+			} 
+			if (stmt != null) { 
+				try { 
+					stmt.close(); 
+				} catch (Exception e) {
+			    } 
+				stmt = null;
+			} 
+			if (currentCon != null) { 
+				try { currentCon.close(); 
+				} catch (Exception e) {
+				} 
+				currentCon = null; 
+			} 
+		} 
+		return tmpList; 
 	}
 }

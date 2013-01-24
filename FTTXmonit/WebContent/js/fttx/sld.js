@@ -20,15 +20,24 @@ function drawSLD() {
 }
 */
 
-function drawSLD(fdts, holes, cables , odbs, onts) {
+function drawSLD(fdts, holes, cables , odbs, onts, splitters) {
 	for ( var c in cables) {
 		drawSLDCable(sldPaper, cables[c].sLDPoints); //, getCableInfoString(cables[c]));
 	}
 	for (var f in fdts){
 		drawSLDFDT(sldPaper, fdts[f].coordX, fdts[f].coordY, fdts[f].sldPosition); //, getFDTInfoString(fdts[f]));
+		var a = [];
+		for (var s in splitters){
+			if (splitters[s].parentID == fdts[f].componentID){
+				if (a[""+splitters[s].size+""]==null)
+					a[""+splitters[s].size+""] = 0;
+				a[""+splitters[s].size+""]++;
+			}
+		}
+		drawSLDFDTInfoTable(sldPaper, fdts[f].componentID, fdts[f].distanceFromOLT, fdts[f].coordX, fdts[f].coordY, fdts[f].size, fdts[f].sldPosition, a);
 	}
 	for ( var h in holes) {
-		drawSLDHole(sldPaper, holes[h].coordX, holes[h].coordY); // getHoleInfoString(holes[h]));
+		drawSLDHole(sldPaper, holes[h].coordX, holes[h].coordY, holes[h].componentID); // getHoleInfoString(holes[h]));
 	}
 	//for (var o in odbs){
 	//	drawODB(odbs[o].latitude, odbs[o].longitude, getODBInfoString(odbs[o]));
@@ -65,7 +74,58 @@ function drawSLDFDT(paper, x, y, angle) {
 	fdt.rotate(angle, x, y);
 	return fdt;
 }
-function drawSLDHole(paper, x, y) {
+function drawSLDFDTInfoTable(paper, id, distance, ox, oy, size, angle, sp){
+	var splitters = "SPLITTERS ";
+	var splittersCnt = 0;
+	for (var s in sp){
+		splitters += "1:" + s + " & ";
+		splittersCnt +=sp[s];
+	}
+	splitters = (splitters == "SPLITTERS "? splitters:splitters.substring(0, splitters.lastIndexOf('&')));
+	
+	var table = "<table class='sldfdtinfo'>";
+	table += "<tr><td>FDT #</td><td align='center'>"+id+"</td></tr>";
+	table += "<tr><td>DIST. TO OLT</td><td align='center'>"+distance+"</td></tr>";
+	table += "<tr><td>OPT. BUDGET</td><td align='center'>26.87</td></tr>";
+	table += "<tr><td>ONT</td><td align='center'>"+size+"</td></tr>";
+	table += "<tr><td>SPLITTERS</td><td align='center'>5YRS</td></tr>";
+	table += "<tr><td>NUMBER</td><td align='center'>"+splittersCnt+" & 4</td></tr>";
+	table += "<tr><td align='center' colspan='2'>"+splitters+"</td></tr>";
+	table +="</table>";
+	var ix, iy, tx, ty;
+	switch (angle){
+	case 0:
+		ix=ox-140;
+		iy=oy-60;
+		tx=ox;
+		ty=oy-40;
+		break;
+	case 90:
+		ix=ox-50;
+		iy=oy-150;
+		tx=ox;
+		ty=oy-25;
+		break;
+	case 180:
+		ix=ox+30;
+		iy=oy-50;
+		tx=ox;
+		ty=oy+40;
+		break;
+	default:
+		ix=ox-50;
+		iy=oy+30;
+		tx=ox;
+		ty=oy-25;
+	}
+	var t = paper.text(tx, ty, id);
+	t.attr({ "font-weight": "bold", fill: 'red', "font-size": 12, "font-family": "Arial, Helvetica, sans-serif"});
+	var infobox = new Infobox(paper, {x:ix,y:iy, width:250, height:250});
+	infobox.div.html(table);
+	infobox.update();
+
+}
+function drawSLDHole(paper, x, y, text) {
 	if (x==0 || y==0)
 		return undefined;
 	var holeW = 20;
@@ -80,6 +140,9 @@ function drawSLDHole(paper, x, y) {
 	var hole = paper.path("M " + (x - holeW / 2) + "," + (y - holeW / 2)
 			+ " l 0," + holeW + " " + holeW + ",0 0," + (-holeW) + " z");
 	hole.attr(fdtOpt);
+	var t = paper.text(x+holeW, y-holeW, text);
+	t.attr({ "font-weight": "bold", fill: 'blue', "font-size": 8, "font-family": "Arial, Helvetica, sans-serif" });
+	
 	return hole;
 }
 function drawSLDCable(paper, coords) {

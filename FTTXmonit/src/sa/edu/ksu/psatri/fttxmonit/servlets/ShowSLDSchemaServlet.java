@@ -1,6 +1,8 @@
 package sa.edu.ksu.psatri.fttxmonit.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -42,13 +44,27 @@ public class ShowSLDSchemaServlet extends HttpServlet {
 			
 			Map<String,List<ComponentBean>> map = ComponentDAO.listVisibleComponents();
 			if (map!=null){
-				List<ComponentBean> list = map.get("FDT");
+				// recupere tous les ONT avec leur FDT
+				Map<String,Integer> numberONTByFDT = new HashMap<String, Integer>();
+				List<ComponentBean> listONT = ComponentDAO.listComponentsByType("ONT");
+				Iterator<ComponentBean> itONT = listONT.iterator();
+				while (itONT.hasNext()) {
+					ComponentBean ont = (ComponentBean) itONT.next();
+					ComponentBean fdt = ComponentDAO.findFDTIdInPredecessors(ont);
+					if (! numberONTByFDT.containsKey(fdt.getComponentID()))
+						numberONTByFDT.put(fdt.getComponentID(), 0);
+					numberONTByFDT.put(fdt.getComponentID(), numberONTByFDT.get(fdt.getComponentID())+1);
+				}
+				map.put("Splitter", new ArrayList<ComponentBean>());
+				List<ComponentBean> list = new ArrayList<ComponentBean>();
+				list.addAll(map.get("FDT"));
 				list.addAll(map.get("Cable"));
 				Iterator<ComponentBean> itr = list.iterator(); 
 				while(itr.hasNext()) {
 					ComponentBean element = (ComponentBean)itr.next();
 					element.setSLDPoints(SLDPointDAO.listSLDPoints(element.getComponentID())); // le mieux est d'utiliser un cache dans SLDPointDAO map id->arraysldpoints et ajouter a cette fonction un attr boolean indiquant utiliser le cache s'il existe ou pas
 					if (element.getComponentTypeName().equals("FDT")){
+						//calculer la position de fdt dans le sld
 						String predecessorId = ComponentDAO.findPredecessor(element.getComponentID());
 						int[][] predSLDPoints = SLDPointDAO.listSLDPoints(predecessorId);
 						int coordX = element.getCoordX();
@@ -65,6 +81,16 @@ public class ShowSLDSchemaServlet extends HttpServlet {
 							else
 								element.setSldPosition(270);
 						}
+						// calculer combien de ONT branches
+						int size = ( numberONTByFDT.containsKey(element.getComponentID()) ? 
+								     numberONTByFDT.get(element.getComponentID()) : 0 );
+						element.setSize(size);
+						
+						// recuperer les splitter attaches
+						List<ComponentBean> listSplitters = ComponentDAO.listChildComponents(element, "('Splitter')");
+						if (listSplitters!=null)
+							map.get("Splitter").addAll(listSplitters);
+						
 					}
 					
 				}
