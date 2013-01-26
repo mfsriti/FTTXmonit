@@ -14,3 +14,9 @@ table.sldfdtinfo td{
 	font-family: Arial; 
 	font-size: 8pt;
 }
+
+.elabelstyle {
+	background-color:#ffffff;
+	font-weight:bold;
+	border:2px #006699 solid;
+}

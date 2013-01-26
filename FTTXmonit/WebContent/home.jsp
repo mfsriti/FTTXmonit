@@ -29,9 +29,9 @@
 <link rel="stylesheet" type="text/css" href="css/text.css" />
 <link rel="stylesheet" type="text/css" href="css/<%=themeColor%>.css" />
 <link type="text/css" href="css/smoothness/ui.css" rel="stylesheet" />
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCwS3h4eGQt9VcoyduaW6kd7_KmJ0SaDe0&amp;sensor=false"></script>
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/form/jquery.form.js"></script> 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCwS3h4eGQt9VcoyduaW6kd7_KmJ0SaDe0&amp;sensor=false"></script>
 <script type="text/javascript" src="js/blend/jquery.blend.js"></script>
 <script type="text/javascript" src="js/ui.core.js"></script>
 <script type="text/javascript" src="js/ui.sortable.js"></script>

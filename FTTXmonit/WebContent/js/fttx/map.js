@@ -85,6 +85,19 @@ var sWeightCable8 = 2;
 
 
 /** ** icon for FDT ** */
+var thermo_blue_image = 
+	new google.maps.MarkerImage('images/keymap/icon_thermo_blue.png',
+		new google.maps.Size(48, 138), new google.maps.Point(0, 0),
+		new google.maps.Point(0, 35));
+var thermo_green_image = 
+	new google.maps.MarkerImage('images/keymap/icon_thermo_green.png',
+		new google.maps.Size(48, 138), new google.maps.Point(0, 0),
+		new google.maps.Point(0, 35));
+var thermo_red_image = 
+	new google.maps.MarkerImage('images/keymap/icon_thermo_red.png',
+		new google.maps.Size(48, 138), new google.maps.Point(0, 0),
+		new google.maps.Point(0, 35));
+
 var image = new google.maps.MarkerImage('images/keymap/fdt_down.png',
 		new google.maps.Size(48, 48), new google.maps.Point(0, 0),
 		new google.maps.Point(0, 35));
@@ -123,9 +136,49 @@ function displayEditMarker(position) {
 	        }
 }
 
+function drawFailureCounters(fdts, holes, cables , splices, odbs, onts, statsReport, type ) {
+	for (var a in fdts) { 
+		drawArea(fdts[a].gPSPoints, '#'+Math.floor(Math.random()*16777215).toString(16), fdts[a].latitude, fdts[a].longitude, getAreaInfoString(fdts[a]));
+	}
+	for ( var c in cables) {
+		drawCable(cables[c].gPSPoints, cables[c].size, false, getCableInfoString(cables[c]));
+		if (type=="counter")
+			addThermoMarker(cables[c].latitude, cables[c].longitude, statsReport [cables[c].componentID].failureCounter, getFailureReportInfoString(statsReport [cables[c].componentID]));			
+	}
+	for (var f in fdts) {
+		drawFDT(fdts[f].latitude, fdts[f].longitude, getFDTInfoString(fdts[f]));
+		if (type=="counter") 
+			addThermoMarker(fdts[f].latitude, fdts[f].longitude, statsReport [fdts[f].componentID].failureCounter, getFailureReportInfoString(statsReport [fdts[f].componentID]));
+		else if (statsReport [fdts[f].componentID] != undefined)
+			addSpareCapacityNumber(fdts[f].latitude, fdts[f].longitude, statsReport [fdts[f].componentID].spareCapacity);
+	}
+	for ( var h in holes) {
+		drawHole(holes[h].latitude, holes[h].longitude, getHoleInfoString(holes[h]));
+		if (type=="counter") 
+			addThermoMarker(holes[h].latitude, holes[h].longitude, statsReport [holes[h].componentID].failureCounter, getFailureReportInfoString(statsReport [holes[h].componentID]));
+		else if ( statsReport [holes[h].componentID] != undefined )
+			addSpareCapacityNumber(holes[h].latitude, holes[h].longitude, statsReport [holes[h].componentID].spareCapacity);
+	}
+	for ( var s in splices) {
+		drawSplice(splices[s].latitude, splices[s].longitude, getSpliceInfoString(splices[s]));
+		if (type=="counter") 
+			addThermoMarker(splices[s].latitude, splices[s].longitude, statsReport [splices[s].componentID].failureCounter, getFailureReportInfoString(statsReport [splices[s].componentID]));	
+	}
+	for (var o in odbs) {
+		drawODB(odbs[o].latitude, odbs[o].longitude, getODBInfoString(odbs[o]));
+		if (type=="counter") 
+			addThermoMarker(odbs[o].latitude, odbs[o].longitude, statsReport [odbs[o].componentID].failureCounter, getFailureReportInfoString(statsReport [odbs[o].componentID]));	
+	}
+	for (var o in onts) {
+		drawONT(onts[o].latitude, onts[o].longitude, getONTInfoString(onts[o]));
+		if (type=="counter") 
+			addThermoMarker(onts[o].latitude, onts[o].longitude, statsReport [onts[o].componentID].failureCounter, getFailureReportInfoString(statsReport [onts[o].componentID]));
+	}
+}
+
 function drawKeyMap(fdts, holes, cables , splices, odbs, onts, failMode) { // new version with json object
 	
-	if (true)// in the future replace the condition with the state of the checkbox
+	if (false)// in the future replace the condition with the state of the checkbox
 		displayEditMarker(currentUserCenter);
 	// draw FDT areas first
 	for (var a in fdts) { 
@@ -353,8 +406,16 @@ function drawCircle(lat, lng, options){
 	return circle;	
 }
 
+function addThermoMarker(lat, lng, counter, infos){
+	var image = thermo_blue_image;
+	if (counter>=5)
+		image = thermo_green_image;
+	if (counter>=10)
+		image = thermo_red_image;
+	addImageMarker(lat, lng, image, infos);
+}
 
-function addImageMarker(lat, lng, infos) {
+function addImageMarker(lat, lng, image ,infos) {
 	var marker = new google.maps.Marker({
 		position : new google.maps.LatLng(lat, lng),
 		map : map,
@@ -367,8 +428,10 @@ function addImageMarker(lat, lng, infos) {
 	return marker;
 }
 
-
-
+function addSpareCapacityNumber(lat, lng, capacity){
+	var position = new google.maps.LatLng(lat, lng);
+	attachInfoBox3(position, capacity);
+}
 
 function attachPolygonInfoWindow(polygon, html)
 {
@@ -470,6 +533,72 @@ function attachInfoBox2(marker, text)
     });	
 }
 
+function attachInfoBox3(position, capacity)
+{   
+	var width = 5;
+	var n= capacity;
+	do {
+		width += 10;
+		n = n/10;
+	} while (n!=0)
+		
+    var boxOptions = {
+         content: capacity
+        ,boxStyle: {
+           border: "1px solid black"
+          ,textAlign: "center"
+          ,fontSize: "10pt"
+          ,width: width
+          ,opacity: 0.65
+          ,fontWeight: "bold"
+          ,background: "yellow"
+         }
+        ,disableAutoPan: true
+        ,pixelOffset: new google.maps.Size(-15, 0)
+        ,position: position
+        ,closeBoxURL: ""
+        ,isHidden: false
+        ,pane: "floatPane"
+        ,enableEventPropagation: true
+    };
+
+    var ibLabel = new InfoBox(boxOptions);
+    ibLabel.open(map);
+    
+	/*
+	 var marker = new google.maps.Marker({
+        map: map,
+        position: position,
+        visible: false
+    });
+               
+    var boxText = document.createElement("div");
+    boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
+    boxText.innerHTML = text;
+               
+    var boxOptions = {
+        content: boxText,
+        disableAutoPan: false,
+        maxWidth: 0,
+        pixelOffset: new google.maps.Size(-140, 0),
+        zIndex: null,
+        boxStyle: { 
+         background: "url('tipbox.gif') no-repeat",
+         opacity: 0.75,
+         width: "280px"
+        },
+        closeBoxMargin: "10px 2px 2px 2px",
+        closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+        infoBoxClearance: new google.maps.Size(1, 1),
+        isHidden: false,
+        pane: "floatPane",
+        enableEventPropagation: false
+    };
+
+    var ib = new InfoBox(boxOptions);
+    ib.open(map, marker);
+    */
+}
 
 function getAreaInfoString(a){
 	var infoString;
@@ -483,6 +612,13 @@ function getCableInfoString(c) {
 	infoString  = "Cable ID: <B>"+c.componentID+"</B><BR>";
 	infoString += "Cable size: <B>"+c.size+"</B><BR>";
 	infoString += "GPS coords: <I>"+c.gPSPoints+"</I>";
+	return infoString;
+}
+
+function getFailureReportInfoString(fr) {
+	var infoString;
+	infoString = "Component ID: <B>"+fr.componentID+"</B><BR>";
+	infoString += "Failures Counter: <B>"+fr.failureCounter+"</B><BR>";
 	return infoString;
 }
 

@@ -7,4 +7,5 @@ source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\05_populateFibres.s
 source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\06_populateSplitters.sql
 source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\07_populateFailures.sql
 source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\08_populateStats.sql
-source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\09_procedures.sql
+source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\09_populateStats.sql
+source D:\devs\FTTXmonit\src\sa\edu\ksu\psatri\fttxmonit\sql\10_procedures.sql

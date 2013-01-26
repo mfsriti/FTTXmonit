@@ -6,7 +6,8 @@ import java.util.List;
 import sa.edu.ksu.psatri.fttxmonit.beans.ReportStatsBean;
 
 public class ReportStatsDAO extends CommonDAO {
-	public static List<ReportStatsBean> listStatsByType(){
+	
+	public static List<ReportStatsBean> listStatsByType(){ 
 		List<ReportStatsBean> tmpList = null;
 		String sqlString = "select StatComponentTypename, SUM(StatNumber) AS StatNumber from ReportStats GROUP BY StatComponentTypename";
 		try {

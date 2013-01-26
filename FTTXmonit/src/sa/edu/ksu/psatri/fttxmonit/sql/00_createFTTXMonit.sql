@@ -1,3 +1,4 @@
+DROP TABLE ReportStats2;
 DROP TABLE ReportStats;
 DROP TABLE ResolvedFailures;
 DROP TABLE CurrentFailures;
@@ -144,5 +145,14 @@ StatID INTEGER AUTO_INCREMENT,
 StatMounth DATE NOT NULL, 
 StatComponentTypeName VARCHAR(30),
 StatNumber INTEGER,
+PRIMARY KEY (StatID)
+);
+
+CREATE TABLE ReportStats2
+(
+StatId INTEGER AUTO_INCREMENT,
+ComponentId VARCHAR(30),
+FailureCounter INTEGER,
+SpareCapacity INTEGER,
 PRIMARY KEY (StatID)
 );

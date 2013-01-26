@@ -48,7 +48,7 @@ if (itemId.equals("one")){
 	tabs = new String[][]{{"See Current Failures","displayFails","Display Failures"}, {"See Current Failures","listFails?type=Current","Current Failures"}, {"See Resolved Failures","listFails?type=Resolved","Resolve Failures"} };
 	actionType = "Failures";
 } else if (itemId.equals("four")){
-	tabs = new String[][]{{"See Tabular Reports","chartReport","Chart Report"}, {"See Textual Reports","pieReport","Pie Report"} };
+	tabs = new String[][]{{"See Tabular Reports","chartReport","Chart Report"}, {"See Textual Reports","pieReport","Pie Report"}, {"See Tabular Reports","counterReport","Failures Counters"}, {"See Textual Reports","spareReport","Spare Capacities"} };
 	actionType = "Reports";
 } else if (itemId.equals("five")){ 
 	tabs = new String[][]{{"Create User","listUsers","Users"}, {"Create User","groups.jsp","Groups"}, {"Create User","actions.jsp","Actions"}};
