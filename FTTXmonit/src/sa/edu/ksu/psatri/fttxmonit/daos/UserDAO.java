@@ -211,7 +211,48 @@ public class UserDAO extends CommonDAO {
 		return bean; 
 	} 
 
-		
+	public static UserBean updateUser(UserBean bean) {
+		String sqlString = "update users set Title='" + bean.getTitle() + "', Password='" + bean.getPassword() 
+				+ "', GroupID=" + bean.getGroupid() + ", FullName='" + bean.getFullname() 
+				+ "', Mobile='" + bean.getMobile() + "', Office='" + bean.getOffice()
+				+ "' where userId="+bean.getUsername()+";";
+		try {
+			int updateCount = executeUpdate(sqlString);
+	        
+	        if (updateCount == 0) { 
+	        	System.out.println("updateUser: Sorry, updating user fail!");
+				bean.setValid(false);
+			} else {
+				System.out.println("updateUser: User successfully updated: " + bean.getUsername() );
+				bean.setValid(true); 
+			}			
+		} catch (Exception e) {
+			System.out.println("Updating user failed: An Exception has occurred! " + e);
+		} finally { 
+			if (result != null) { 
+				try { 
+					result.close(); 
+				} catch (Exception e) {
+				}
+			    result = null; 
+			} 
+			if (stmt != null) { 
+				try { 
+					stmt.close(); 
+				} catch (Exception e) {
+			    } 
+				stmt = null;
+			} 
+			if (currentCon != null) { 
+				try { currentCon.close(); 
+				} catch (Exception e) {
+				} 
+				currentCon = null; 
+			} 
+		} 
+		return bean; 
+	} 
+	
 public static UserBean deleteUser(UserBean bean) {
 	//This query delete the user from the database 
 	String sqlString = "delete from users where UserId='" + bean.getUsername() + "';";

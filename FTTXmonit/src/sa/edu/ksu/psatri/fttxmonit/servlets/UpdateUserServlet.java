@@ -23,7 +23,6 @@ public class UpdateUserServlet extends HttpServlet {
      */
     public UpdateUserServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -35,10 +34,16 @@ public class UpdateUserServlet extends HttpServlet {
 			
 			UserBean user = new UserBean(); 
 			user.setUsername(request.getParameter("userId"));
-			user = UserDAO.deleteUser(user);
-			if (!user.isValid()) {
+			user.setFullname(request.getParameter("name"));
+			user.setPassword(request.getParameter("password"));
+			user.setTitle(request.getParameter("title"));
+			user.setMobile(request.getParameter("mobile"));
+			user.setOffice(request.getParameter("office"));
+			user.setGroupid(Integer.parseInt(request.getParameter("group")));
+			user = UserDAO.updateUser(user);
+			if (user.isValid()) {
 				HttpSession session = request.getSession(true);
-				session.setAttribute("deletedUser",user);				
+				session.setAttribute("updatedUser",user);				
 				response.sendRedirect("listUsers"); 
 			} else
 				response.sendRedirect("listUsers"); 
@@ -51,7 +56,7 @@ public class UpdateUserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doGet(request,response);
 	}
 
 }

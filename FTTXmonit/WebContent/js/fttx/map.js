@@ -535,20 +535,24 @@ function attachInfoBox2(marker, text)
 
 function attachInfoBox3(position, capacity)
 {   
+	
 	var width = 5;
 	var n= capacity;
 	do {
+		
 		width += 10;
-		n = n/10;
+		n = ~~(n/10);
 	} while (n!=0)
 		
+	var w = width + "px";
+	
     var boxOptions = {
          content: capacity
         ,boxStyle: {
            border: "1px solid black"
           ,textAlign: "center"
           ,fontSize: "10pt"
-          ,width: width
+          ,width: w
           ,opacity: 0.65
           ,fontWeight: "bold"
           ,background: "yellow"
@@ -564,40 +568,6 @@ function attachInfoBox3(position, capacity)
 
     var ibLabel = new InfoBox(boxOptions);
     ibLabel.open(map);
-    
-	/*
-	 var marker = new google.maps.Marker({
-        map: map,
-        position: position,
-        visible: false
-    });
-               
-    var boxText = document.createElement("div");
-    boxText.style.cssText = "border: 1px solid black; margin-top: 8px; background: yellow; padding: 5px;";
-    boxText.innerHTML = text;
-               
-    var boxOptions = {
-        content: boxText,
-        disableAutoPan: false,
-        maxWidth: 0,
-        pixelOffset: new google.maps.Size(-140, 0),
-        zIndex: null,
-        boxStyle: { 
-         background: "url('tipbox.gif') no-repeat",
-         opacity: 0.75,
-         width: "280px"
-        },
-        closeBoxMargin: "10px 2px 2px 2px",
-        closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
-        infoBoxClearance: new google.maps.Size(1, 1),
-        isHidden: false,
-        pane: "floatPane",
-        enableEventPropagation: false
-    };
-
-    var ib = new InfoBox(boxOptions);
-    ib.open(map, marker);
-    */
 }
 
 function getAreaInfoString(a){

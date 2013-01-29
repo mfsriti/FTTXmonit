@@ -35,13 +35,13 @@ public class LoginServlet extends HttpServlet {
 			user.setUsername(request.getParameter("username"));
 			user.setPassword(request.getParameter("password"));
 			user = UserDAO.login(user);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentSessionUser",user);
 			if (user.isValid()) {
-				HttpSession session = request.getSession(true);
-				session.setAttribute("currentSessionUser",user);
 				//response.sendRedirect("userLogged.jsp"); 
 				response.sendRedirect("home.jsp"); 
 			} else
-				response.sendRedirect("invalidLogin.jsp"); 
+				response.sendRedirect("index.jsp"); 
 		} catch (Throwable e) { 
 				e.printStackTrace();
 		}

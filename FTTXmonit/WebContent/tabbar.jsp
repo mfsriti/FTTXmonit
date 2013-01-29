@@ -39,31 +39,31 @@ String [][] tabs = null;
 String actionType=null;
 
 if (itemId.equals("one")){ 
-	tabs = new String[][]{{"Home","home.jsp","Home"}, {"Home","#","News"} };
+	tabs = new String[][]{{"Home","homecontent.jsp","Home"}};
 	actionType = "Home";
 } else if (itemId.equals("two")){ 
 	tabs = new String[][]{{"View Key Map","showKM","Key Map"}, {"View/Update SLD","showSLD","SLD Schema"} };
 	actionType = "KeyMap";
 } else if (itemId.equals("three")){ 
-	tabs = new String[][]{{"See Current Failures","displayFails","Display Failures"}, {"See Current Failures","listFails?type=Current","Current Failures"}, {"See Resolved Failures","listFails?type=Resolved","Resolve Failures"} };
+	tabs = new String[][]{{"See Current Failures","displayFails","Display Failures"}, {"See Current Failures","listFails?type=Current","Current Failures"}, {"See Resolved Failures","listFails?type=Resolved","Resolved Failures"} };
 	actionType = "Failures";
 } else if (itemId.equals("four")){
 	tabs = new String[][]{{"See Tabular Reports","chartReport","Chart Report"}, {"See Textual Reports","pieReport","Pie Report"}, {"See Tabular Reports","counterReport","Failures Counters"}, {"See Textual Reports","spareReport","Spare Capacities"} };
 	actionType = "Reports";
 } else if (itemId.equals("five")){ 
-	tabs = new String[][]{{"Create User","listUsers","Users"}, {"Create User","groups.jsp","Groups"}, {"Create User","actions.jsp","Actions"}};
+	tabs = new String[][]{{"Create User","listUsers","Users"}, {"Create User","listGroups","Groups"}, {"Create User","listActions","Actions"}};
 	actionType = "Users";
 } else if (itemId.equals("six")){
-	tabs = new String[][]{{"Backup","#","Hard Disk Backup"}, {"Backup","#","Web Backup"} };
+	tabs = new String[][]{{"Backup","localbackup.jsp","Local Backup"}, {"Backup","serverbackup.jsp","Server Backup"} };
 	actionType = "Backup";
 } else if (itemId.equals("seven")){ 
-	tabs = new String[][]{{"Configuration","#","Reports Configuration"}, {"Configuration","#","ACL Configuration"}, {"Configuration","#","Component Types Management"} };
+	tabs = new String[][]{{"Configuration","reportconfig.jsp","Reports Configuration"}, {"Configuration","aclconfig.jsp","ACL Configuration"}, {"Configuration","typeconfig.jsp","Component Types Management"} };
 	actionType = "Configuration";	
 } else if (itemId.equals("eight")){
-	tabs = new String[][]{{"Preferences","#","General Preferences"}, {"Preferences","#","Display Preferences"} };
+	tabs = new String[][]{{"Preferences","generalprefs.jsp","General Preferences"}, {"Preferences","displayprefs.jsp","Display Preferences"} };
 	actionType = "Preferences";
 } else if (itemId.equals("nine")) {
-	tabs = new String[][]{{"Help","#","Help Contents"}, {"Help","#","Index"} , {"Help","#","Search"} };
+	tabs = new String[][]{{"Help","help.jsp","Help Contents"} };
 	actionType = "Help";
 }
 displayTabs(session, out, actionType, tabs, itemId, tabId);

@@ -3,7 +3,7 @@
 	import="sa.edu.ksu.psatri.fttxmonit.beans.UserBean, java.util.Map, java.util.List"%>
 	
 <%!
-public String getLinkClass(String curItemId, HttpServletRequest request){
+public String getLinkClass(String curItemId, HttpServletRequest request) {
 	return curItemId.equals(request.getParameter("itemId")) ? "main current" : "main";
 }
 %>
@@ -58,7 +58,7 @@ if (currentUser.getActionList().containsKey("Help")){
 for (i=0; i<elemMenuSize; i++){
 	String liClass = ( (i==0) ? "first" : ( (i==elemMenuSize-1) ? "last" : "middle") );
 	out.print("<li class=\"item "+liClass+"\" id=\""+menu[i].elemId+"\">");
- 	out.print("<a href=\"javascript:void(0);\" class=\""+getLinkClass(menu[i].elemId,  request)+"\" onclick=\"onClickMenu('"+menu[i].elemId+"')\"  > <span class=\"outer\"><span class=\"inner "+menu[i].elemCSSClass+"\">"+menu[i].elemLabel+"</span></span></a></li>");
+ 	out.print("<a href=\"javascript:void(0);\" class=\""+getLinkClass(menu[i].elemId,  request)+"\" onclick=\"onClickMenu('"+menu[i].elemId+"','"+ currentUser.getGroupname()+"')\"  > <span class=\"outer\"><span class=\"inner "+menu[i].elemCSSClass+"\">"+menu[i].elemLabel+"</span></span></a></li>");
 }
 %> 
 </ul>

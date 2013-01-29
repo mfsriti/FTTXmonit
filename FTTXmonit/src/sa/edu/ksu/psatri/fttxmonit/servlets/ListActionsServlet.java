@@ -10,21 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import sa.edu.ksu.psatri.fttxmonit.beans.UserBean;
-import sa.edu.ksu.psatri.fttxmonit.daos.UserDAO;
+import sa.edu.ksu.psatri.fttxmonit.beans.ActionBean;
+import sa.edu.ksu.psatri.fttxmonit.beans.GroupBean;
+import sa.edu.ksu.psatri.fttxmonit.daos.ActionDAO;
+import sa.edu.ksu.psatri.fttxmonit.daos.GroupDAO;
 
 /**
- * Servlet implementation class ListUsersServlet
+ * Servlet implementation class ListActionsServlet
  */
-@WebServlet("/listUsers")
-public class ListUsersServlet extends HttpServlet {
+@WebServlet("/listActions")
+public class ListActionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListUsersServlet() {
-        super();
+    public ListActionsServlet() {
+        super();      
     }
 
 	/**
@@ -32,10 +34,10 @@ public class ListUsersServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try { 
-			List<UserBean> list = UserDAO.listUsers();
+			List<ActionBean> list = ActionDAO.listActions();
 			HttpSession session = request.getSession(true);
-			session.setAttribute("listUsers",list); 
-			response.sendRedirect("users.jsp"); 
+			session.setAttribute("listActions",list); 
+			response.sendRedirect("actions.jsp"); 
 		} catch (Throwable e) { 
 				e.printStackTrace();
 		}
@@ -45,7 +47,7 @@ public class ListUsersServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

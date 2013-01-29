@@ -26,6 +26,12 @@ public class CommonDAO {
 		return stmt.executeUpdate(sqlString);
 	}
 
+	protected static int executeUpdate(String sqlString) throws SQLException {
+		init();
+		result = null;
+		return stmt.executeUpdate(sqlString);
+	}
+
 	private static void init() throws SQLException {
 		currentCon = ConnectionManager.getConnection();  
 		stmt = currentCon.createStatement();

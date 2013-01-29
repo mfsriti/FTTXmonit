@@ -1,3 +1,4 @@
+<%@page import="sa.edu.ksu.psatri.fttxmonit.beans.UserBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -23,7 +24,15 @@
 			<h1>Welcome to FTTX Monitoring Application</h1>
 			<div id="login">
 				<p class="tip">Please Log In</p>
+<% 
+UserBean currentUser = (UserBean) (session.getAttribute("currentSessionUser"));
+
+if (currentUser != null && ! currentUser.isValid()) {
+%>
 				<p class="error">Invalid username or passowrd, please try again!</p>
+<%
+}
+%>
 				<form action="login">
 					<p>
 						<label><strong>Username</strong> <input type="text"

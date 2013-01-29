@@ -30,15 +30,25 @@ function changeElement(elemId, page, params) {
 		xmlhttp.send();
 	}
 	
-	function onClickMenu(itemId) {
-		changeElement("menu", "menubar.jsp", "itemId="+itemId);
+	function onClickMenu(itemId, user) {
+		//changeElement("menu", "menubar.jsp", "itemId="+itemId);
 		
 		var page = "#";
-		if (itemId === "one") page ="home.jsp";
+		if (itemId === "one") {
+			if (user == "Administrator")	page ="listUsers";
+			else if (user == "DecisionMaker") page ="pieReport";
+			else if (user == "Engineer") page ="showKM";
+			else if (user == "Technician") page ="showSLD";
+		}
+		
 		if (itemId === "two") page = "showKM";
 		if (itemId === "three") page = "displayFails";
 		if (itemId === "four") page = "chartReport";
 		if (itemId === "five") page = "listUsers";
+		if (itemId === "six") page = "localbackup.jsp";
+		if (itemId === "seven") page = "reportconfig.jsp";
+		if (itemId === "eight") page = "generalprefs.jsp";
+		if (itemId === "nine") page = "help.jsp";
 		
 		onClickTab(itemId, "tab0", page);
    	}
@@ -51,6 +61,7 @@ function changeElement(elemId, page, params) {
 		} else {
 			cancelFailuresRefresh();
 		}
+		changeElement("menu", "menubar.jsp", "itemId="+itemId);
 		changeElement("tabs", "tabbar.jsp", "itemId="+itemId+"&tabId="+tabId);	
 	   	changeElement("content", pageName, "");
    	}
@@ -59,7 +70,7 @@ function changeElement(elemId, page, params) {
 	   	changeElement("content", pageName, params);
    	}
 	
-	function postAddUserForm(form){
+	function postForm(form){
 		var theForm = document.getElementById(form);
 	    $.post(
 	        theForm.action, 
@@ -70,3 +81,4 @@ function changeElement(elemId, page, params) {
 	    );
 	    return false;
 	}
+	
